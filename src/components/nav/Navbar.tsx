@@ -1,7 +1,16 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, Box, Button } from "@material-ui/core";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Box,
+  Button,
+  Link as MaterialLink
+} from "@material-ui/core";
 
 import Link from "./Link";
+
+const googleLogin = `${process.env.REACT_APP_AUTH_PATH}/auth/google`;
 
 const Navbar = () => {
   return (
@@ -14,9 +23,10 @@ const Navbar = () => {
             </Link>
           </Typography>
         </Box>
-        <Link to="/candidates" color="inherit">
-          <Button color="inherit">Candidates</Button>
-        </Link>
+
+        <MaterialLink href={googleLogin}>
+          <Button color="inherit">Login with Google</Button>
+        </MaterialLink>
       </Toolbar>
     </AppBar>
   );

@@ -1,9 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+import Navbar from "./nav/Navbar";
 import Home from "./home/Home";
 import Login from "./login/Login";
-import Navbar from "./nav/Navbar";
+import PrivacyPolicy from "./static/PrivacyPolicy";
+import Terms from "./static/Terms";
 
 function App() {
   return (
@@ -13,6 +15,14 @@ function App() {
       <Switch>
         <Route path="/login">
           <Login />
+        </Route>
+
+        <Route path="/privacy-policy">
+          <PrivacyPolicy />
+        </Route>
+
+        <Route path="/terms">
+          <Terms />
         </Route>
 
         <Route path="/">
