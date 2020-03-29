@@ -8,8 +8,9 @@ import PrivacyPolicy from "./features/static/PrivacyPolicy";
 import Terms from "./features/static/Terms";
 import UserProfile from "./features/user/UserProfile";
 import MyTalks from "./features/talks/MyTalks";
-
 import { loadUser } from "./features/user/userSlice";
+import WithUser from "./features/user/withUser";
+import PrivateRoute from "./features/user/PrivateRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,27 +23,29 @@ function App() {
     <Router>
       <Navbar />
 
-      <Switch>
-        <Route path="/privacy-policy">
-          <PrivacyPolicy />
-        </Route>
+      <WithUser>
+        <Switch>
+          <PrivateRoute path="/me">
+            <UserProfile />
+          </PrivateRoute>
 
-        <Route path="/terms">
-          <Terms />
-        </Route>
+          <PrivateRoute path="/talks">
+            <MyTalks />
+          </PrivateRoute>
 
-        <Route path="/me">
-          <UserProfile />
-        </Route>
+          <Route path="/privacy-policy">
+            <PrivacyPolicy />
+          </Route>
 
-        <Route path="/talks">
-          <MyTalks />
-        </Route>
+          <Route path="/terms">
+            <Terms />
+          </Route>
 
-        <Route path="/">
-          <Home />
-        </Route>
-      </Switch>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </WithUser>
     </Router>
   );
 }

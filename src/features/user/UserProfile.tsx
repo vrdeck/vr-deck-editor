@@ -2,7 +2,7 @@ import React from "react";
 
 import { Box, Avatar, Container, Typography } from "@material-ui/core";
 
-import { useSelector } from "../../app/store";
+import { useSelector } from "src/app/store";
 import { selectUser } from "./userSlice";
 
 export interface UserProfileProps {}

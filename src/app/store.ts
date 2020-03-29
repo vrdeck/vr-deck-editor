@@ -8,7 +8,7 @@ import {
   Selector as UntypedSelector
 } from "@reduxjs/toolkit";
 
-import userReducer from "../features/user/userSlice";
+import userReducer from "src/features/user/userSlice";
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;

@@ -1,8 +1,8 @@
 import { createSlice, Dispatch } from "@reduxjs/toolkit";
 
-import { Selector } from "../../app/store";
-import { User } from "../../lib/User";
-import api from "../../lib/api";
+import { Selector } from "src/app/store";
+import { User } from "src/lib/User";
+import api from "src/lib/api";
 
 export interface UserSlice {
   userLoading: boolean;
