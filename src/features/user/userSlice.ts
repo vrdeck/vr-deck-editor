@@ -4,7 +4,7 @@ import { Selector } from "../../app/store";
 import { User } from "../../lib/User";
 import api from "../../lib/api";
 
-interface UserSlice {
+export interface UserSlice {
   userLoading: boolean;
   user: User | null;
 }
