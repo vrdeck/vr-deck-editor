@@ -15,25 +15,32 @@ export const slice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    userLoading: state => {
+    userLoadStart: state => {
       state.userLoading = true;
     },
-    userLoaded: (state, action) => {
+    userLoadSuccess: (state, action) => {
       state.user = action.payload;
+      state.userLoading = false;
+    },
+    userLoadError: state => {
       state.userLoading = false;
     }
   }
 });
 
-export const { userLoaded, userLoading } = slice.actions;
+export const { userLoadStart, userLoadSuccess, userLoadError } = slice.actions;
 
 export const loadUser = () => async (dispatch: Dispatch) => {
-  dispatch(userLoading());
+  dispatch(userLoadStart());
 
-  const response = await api.get<{ data: User }>("/me");
-  const user = response.data.data;
+  try {
+    const response = await api.get<{ data: User }>("/me");
+    const user = response.data.data;
 
-  dispatch(userLoaded(user));
+    dispatch(userLoadSuccess(user));
+  } catch (e) {
+    dispatch(userLoadError());
+  }
 };
 
 export const selectUser: Selector<User | null> = state => {
