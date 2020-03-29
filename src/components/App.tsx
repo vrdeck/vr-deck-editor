@@ -25,6 +25,10 @@ function App() {
           <Terms />
         </Route>
 
+        <Route path="/login-redirect">
+          <Login />
+        </Route>
+
         <Route path="/">
           <Home />
         </Route>
