@@ -1,10 +1,9 @@
 import React from "react";
 
-import { useDispatch } from "react-redux";
 import { Box, Avatar, Container, Typography } from "@material-ui/core";
 
 import { useSelector } from "../../app/store";
-import { selectUser, loadUser } from "./userSlice";
+import { selectUser } from "./userSlice";
 
 export interface UserProfileProps {}
 
