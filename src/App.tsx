@@ -11,6 +11,7 @@ import MyTalks from "./features/talks/MyTalks";
 import { loadUser } from "./features/user/userSlice";
 import WithUser from "./features/user/withUser";
 import PrivateRoute from "./features/user/PrivateRoute";
+import EditTalk from "./features/talks/EditTalk";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,14 @@ function App() {
         <Switch>
           <PrivateRoute path="/me">
             <UserProfile />
+          </PrivateRoute>
+
+          <PrivateRoute path="/talks/new">
+            <EditTalk />
+          </PrivateRoute>
+
+          <PrivateRoute path="/talks/:slug">
+            <EditTalk />
           </PrivateRoute>
 
           <PrivateRoute path="/talks">
