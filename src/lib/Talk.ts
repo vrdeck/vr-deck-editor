@@ -21,4 +21,4 @@ export const blankTalk: Talk = {
 };
 
 export const talkViewUrl = (talk: Talk): string =>
-  `${process.env.REACT_APP_VIEWER}?talk=${talk.slug}`;
+  `${process.env.REACT_APP_VIEWER}/${talk.slug}`;

@@ -6,7 +6,7 @@ import {
   Button
 } from "@material-ui/core";
 
-const sampleViewer = `${process.env.REACT_APP_VIEWER}?talk=test-deck`;
+const sampleViewer = `${process.env.REACT_APP_VIEWER}/test-deck`;
 
 const Home = () => {
   return (

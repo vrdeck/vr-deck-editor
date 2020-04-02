@@ -45,7 +45,7 @@ const MyTalks: React.FunctionComponent<MyTalksProps> = () => {
                 </Link>
 
                 <MaterialLink
-                  href={`${process.env.REACT_APP_VIEWER}?talk=${talk.slug}`}
+                  href={`${process.env.REACT_APP_VIEWER}/${talk.slug}`}
                 >
                   <Button>View</Button>
                 </MaterialLink>
