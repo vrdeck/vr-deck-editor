@@ -2,7 +2,7 @@ import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
 
 import { Selector } from "src/app/store";
 import api from "src/lib/api";
-import { Talk, blankTalk } from "src/lib/Talk";
+import { Talk, blankTalk, TalkImage } from "src/lib/Talk";
 import { blankSlide, blankSlideLine, SlideLine } from "src/lib/Deck";
 
 export interface TalksSlice {
@@ -12,17 +12,17 @@ export interface TalksSlice {
 
 const initialState: TalksSlice = {
   talkLoading: false,
-  talk: null
+  talk: null,
 };
 
 export const slice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    newTalk: state => {
+    newTalk: (state) => {
       state.talk = blankTalk;
     },
-    talkLoadStart: state => {
+    talkLoadStart: (state) => {
       state.talkLoading = true;
       state.talk = null;
     },
@@ -30,7 +30,7 @@ export const slice = createSlice({
       state.talk = action.payload;
       state.talkLoading = false;
     },
-    talkLoadError: state => {
+    talkLoadError: (state) => {
       state.talkLoading = false;
     },
     updateTalk(state, action: PayloadAction<Partial<Talk>>) {
@@ -91,8 +91,14 @@ export const slice = createSlice({
       const { line, slide, slideLine } = action.payload;
 
       state.talk.deck.slides[slide][line] = slideLine;
-    }
-  }
+    },
+    uploadImageSuccess(state, action: PayloadAction<{ talkImage: TalkImage }>) {
+      if (!state.talk) return;
+      const { talkImage } = action.payload;
+
+      state.talk.images.push(talkImage);
+    },
+  },
 });
 
 export const {
@@ -105,7 +111,8 @@ export const {
   addSlide,
   addSlideLine,
   removeSlide,
-  removeSlideLine
+  removeSlideLine,
+  uploadImageSuccess,
 } = slice.actions;
 
 export const loadTalk = (slug: string) => async (dispatch: Dispatch) => {
@@ -129,14 +136,14 @@ export const saveTalk = () => async (dispatch: Dispatch, getState: any) => {
   try {
     if (talk.id) {
       const response = await api.put<{ data: Talk }>(`/me/talks/${talk.id}`, {
-        talk
+        talk,
       });
       const updatedTalk = response.data.data;
 
       dispatch(updateTalk(updatedTalk));
     } else {
       const response = await api.post<{ data: Talk }>(`/me/talks`, {
-        talk
+        talk,
       });
       const updatedTalk = response.data.data;
 
@@ -145,11 +152,38 @@ export const saveTalk = () => async (dispatch: Dispatch, getState: any) => {
   } catch (e) {}
 };
 
-export const selectTalkLoading: Selector<boolean> = state => {
+export const uploadImage = (image: File) => async (
+  dispatch: Dispatch,
+  getState: any
+) => {
+  const state = getState();
+  const talk = selectCurrentTalk(state);
+  if (!talk) return;
+
+  const form = new FormData();
+  form.append("talk_image[image]", image);
+
+  try {
+    const response = await api.post<{ data: TalkImage }>(
+      `/me/talks/${talk.id}/images`,
+      form,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    const talkImage = response.data.data;
+
+    dispatch(uploadImageSuccess({ talkImage }));
+  } catch (e) {
+    console.error("image failed");
+  }
+};
+
+export const selectTalkLoading: Selector<boolean> = (state) => {
   return state.currentTalk.talkLoading;
 };
 
-export const selectCurrentTalk: Selector<Talk | null> = state => {
+export const selectCurrentTalk: Selector<Talk | null> = (state) => {
   return state.currentTalk.talk;
 };
 

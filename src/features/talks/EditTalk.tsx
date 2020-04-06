@@ -5,7 +5,7 @@ import {
   Box,
   Typography,
   Button,
-  Link as MaterialLink
+  Link as MaterialLink,
 } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,11 +15,12 @@ import {
   loadTalk,
   newTalk,
   updateTalk,
-  saveTalk
+  saveTalk,
 } from "./currentTalkSlice";
 import { Talk, talkViewUrl } from "src/lib/Talk";
 import EditDeck from "./EditDeck";
 import { ChangeEvent } from "src/lib/Event";
+import TalkImages from "./TalkImages";
 
 export interface EditTalkProps {}
 
@@ -76,7 +77,9 @@ const EditTalk: React.FunctionComponent<EditTalkProps> = () => {
           onChange={handleUpdate("slug")}
         ></TextField>
 
-        <EditDeck value={talk.deck} onChange={handleUpdate("deck")} />
+        <TalkImages talk={talk} />
+
+        <EditDeck value={talk.deck} talk={talk} />
 
         <Button variant="contained" color="primary" onClick={handleSave}>
           Save

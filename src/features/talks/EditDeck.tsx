@@ -5,11 +5,11 @@ import {
   Button,
   Typography,
   CardContent,
-  CardActions
+  CardActions,
 } from "@material-ui/core";
 
 import { Deck, SlideLine } from "src/lib/Deck";
-import { OnChange, ChangeEvent } from "src/lib/Event";
+import { ChangeEvent } from "src/lib/Event";
 import EditSlideLine from "./EditSlideLine";
 import { useDispatch } from "react-redux";
 import {
@@ -17,15 +17,16 @@ import {
   addSlide,
   addSlideLine,
   removeSlide,
-  removeSlideLine
+  removeSlideLine,
 } from "./currentTalkSlice";
+import { Talk } from "src/lib/Talk";
 
 export interface EditDeckProps {
+  talk: Talk;
   value: Deck;
-  onChange: OnChange<Deck>;
 }
 
-const EditDeck: React.FunctionComponent<EditDeckProps> = ({ value }) => {
+const EditDeck: React.FunctionComponent<EditDeckProps> = ({ value, talk }) => {
   const dispatch = useDispatch();
 
   const handleSlideUpdate = (slide: number, line: number) => (
@@ -57,6 +58,7 @@ const EditDeck: React.FunctionComponent<EditDeckProps> = ({ value }) => {
               {slide.map((slideLine, lineNumber) => (
                 <EditSlideLine
                   key={lineNumber}
+                  talk={talk}
                   value={slideLine}
                   onChange={handleSlideUpdate(slideNumber, lineNumber)}
                   onAdd={handleAddSlideLine(slideNumber, lineNumber)}

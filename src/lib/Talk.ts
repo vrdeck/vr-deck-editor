@@ -9,6 +9,12 @@ export interface Talk {
   theme: DeckTheme;
   audio: string;
   motionCapture: string;
+  images: TalkImage[];
+}
+
+export interface TalkImage {
+  id: number;
+  image: string;
 }
 
 export const blankTalk: Talk = {
@@ -17,7 +23,8 @@ export const blankTalk: Talk = {
   theme: blankTheme,
   deck: { slides: [blankSlide] },
   motionCapture: "",
-  audio: ""
+  audio: "",
+  images: [],
 };
 
 export const talkViewUrl = (talk: Talk): string =>

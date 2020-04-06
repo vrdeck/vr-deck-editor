@@ -11,30 +11,30 @@ export interface TalksSlice {
 
 const initialState: TalksSlice = {
   talksLoading: false,
-  talks: []
+  talks: [],
 };
 
 export const slice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    talksLoadStart: state => {
+    talksLoadStart: (state) => {
       state.talksLoading = true;
     },
     talksLoadSuccess: (state, action: PayloadAction<Talk[]>) => {
       state.talks = action.payload;
       state.talksLoading = false;
     },
-    talksLoadError: state => {
+    talksLoadError: (state) => {
       state.talksLoading = false;
-    }
-  }
+    },
+  },
 });
 
 export const {
   talksLoadStart,
   talksLoadSuccess,
-  talksLoadError
+  talksLoadError,
 } = slice.actions;
 
 export const loadTalks = () => async (dispatch: Dispatch) => {
@@ -50,11 +50,11 @@ export const loadTalks = () => async (dispatch: Dispatch) => {
   }
 };
 
-export const selectTalks: Selector<Talk[]> = state => {
+export const selectTalks: Selector<Talk[]> = (state) => {
   return state.talks.talks;
 };
 
-export const selectTalksLoading: Selector<boolean> = state => {
+export const selectTalksLoading: Selector<boolean> = (state) => {
   return state.talks.talksLoading;
 };
 
