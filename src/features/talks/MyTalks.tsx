@@ -36,7 +36,7 @@ const MyTalks: React.FunctionComponent<MyTalksProps> = () => {
       ) : (
         <List>
           {talks.map(talk => (
-            <ListItem>
+            <ListItem key={talk.slug}>
               <ListItemText primary={talk.name} secondary={talk.slug} />
 
               <ListItemSecondaryAction>
