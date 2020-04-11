@@ -10,6 +10,7 @@ import {
 
 import userReducer from "src/features/user/userSlice";
 import talksReducer from "src/features/talks/talksSlice";
+import allTalksReducer from "src/features/talks/allTalksSlice";
 import currentTalkReducer from "src/features/talks/currentTalkSlice";
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -19,6 +20,7 @@ export type Selector<R> = UntypedSelector<RootState, R>;
 const rootReducer = combineReducers({
   user: userReducer,
   talks: talksReducer,
+  allTalks: allTalksReducer,
   currentTalk: currentTalkReducer
 });
 

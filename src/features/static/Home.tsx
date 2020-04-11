@@ -3,19 +3,52 @@ import {
   Container,
   Typography,
   Link as MaterialLink,
-  Button
+  List,
+  ListItem,
+  ListItemText,
 } from "@material-ui/core";
+import { useDispatch } from "react-redux";
 
-const sampleViewer = `${process.env.REACT_APP_VIEWER}/test-deck`;
+import { useSelector } from "src/app/store";
+import { talkViewUrl } from "src/lib/Talk";
+
+import {
+  loadAllTalks,
+  selectTalksLoading,
+  selectTalks,
+} from "../talks/allTalksSlice";
 
 const Home = () => {
+  const dispatch = useDispatch();
+
+  const talks = useSelector(selectTalks);
+
+  React.useEffect(() => {
+    dispatch(loadAllTalks());
+  }, [dispatch]);
+
   return (
     <Container>
       <Typography variant="h1">VR Deck</Typography>
-      <Typography>VR Deck is cool.</Typography>
-      <MaterialLink href={sampleViewer} color="inherit">
-        <Button>Sample Talk</Button>
-      </MaterialLink>
+      <Typography>
+        A tool for presenting and viewing short talks in virtual reality.
+      </Typography>
+
+      <Typography>Check out these talks:</Typography>
+
+      <List>
+        {talks.map((talk) => (
+          <MaterialLink
+            key={talk.slug}
+            href={talkViewUrl(talk)}
+            target="_blank"
+          >
+            <ListItem button>
+              <ListItemText primary={talk.name} secondary={talk.slug} />
+            </ListItem>
+          </MaterialLink>
+        ))}
+      </List>
     </Container>
   );
 };

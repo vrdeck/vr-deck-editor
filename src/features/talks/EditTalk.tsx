@@ -7,6 +7,10 @@ import {
   Button,
   Link as MaterialLink,
   Drawer,
+  CardContent,
+  Card,
+  FormControlLabel,
+  Switch,
 } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -48,6 +52,12 @@ const EditTalk: React.FunctionComponent<EditTalkProps> = () => {
     };
   }
 
+  function handleCheckUpdate<T extends keyof Talk>(field: T) {
+    return (event: any, checked: boolean) => {
+      dispatch(updateTalk({ [field]: checked }));
+    };
+  }
+
   function handleSave() {
     dispatch(saveTalk());
   }
@@ -81,17 +91,32 @@ const EditTalk: React.FunctionComponent<EditTalkProps> = () => {
       </Box>
 
       <Box display="flex" flexDirection="column">
-        <TextField
-          label="Name"
-          value={talk.name}
-          onChange={handleUpdate("name")}
-        ></TextField>
+        <Card>
+          <CardContent>
+            <TextField
+              label="Name"
+              value={talk.name}
+              onChange={handleUpdate("name")}
+            ></TextField>
 
-        <TextField
-          label="Slug"
-          value={talk.slug}
-          onChange={handleUpdate("slug")}
-        ></TextField>
+            <TextField
+              label="Slug"
+              value={talk.slug}
+              onChange={handleUpdate("slug")}
+            ></TextField>
+
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={talk.private}
+                  onChange={handleCheckUpdate("private")}
+                  color="primary"
+                />
+              }
+              label="Private Talk"
+            />
+          </CardContent>
+        </Card>
 
         <EditDeck value={talk.deck} talk={talk} />
 

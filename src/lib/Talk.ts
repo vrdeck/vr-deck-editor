@@ -10,6 +10,7 @@ export interface Talk {
   audio: string;
   motionCapture: string;
   images: TalkImage[];
+  private: boolean;
 }
 
 export interface TalkImage {
@@ -28,6 +29,7 @@ export const blankTalk: Talk = {
   motionCapture: "",
   audio: "",
   images: [],
+  private: false,
 };
 
 export const talkViewUrl = (talk: Talk): string =>
