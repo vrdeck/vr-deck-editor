@@ -41,8 +41,7 @@ const ImageSelector: React.FunctionComponent<ImageSelectorProps> = ({
 
         {images.map((image) => (
           <MenuItem key={image.id} value={image.id}>
-            {/* todo: render image */}
-            {image.image}
+            <img alt={image.image} src={image.image} height="300px" />
           </MenuItem>
         ))}
       </Select>
