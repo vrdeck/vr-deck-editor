@@ -15,6 +15,9 @@ export interface Talk {
 export interface TalkImage {
   id: number;
   image: string;
+  filename: string;
+  width: number;
+  height: number;
 }
 
 export const blankTalk: Talk = {

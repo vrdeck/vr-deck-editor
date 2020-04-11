@@ -167,10 +167,14 @@ export const uploadImage = (image: File) => async (
   const talk = selectCurrentTalk(state);
   if (!talk) return;
 
-  const form = new FormData();
-  form.append("talk_image[image]", image);
-
   try {
+    const { height, width } = await getImageDimensions(image);
+
+    const form = new FormData();
+    form.append("talk_image[image]", image);
+    form.append("talk_image[height]", `${height}`);
+    form.append("talk_image[width]", `${width}`);
+
     const response = await api.post<{ data: TalkImage }>(
       `/me/talks/${talk.id}/images`,
       form,
@@ -210,5 +214,32 @@ export const selectTalkLoading: Selector<boolean> = (state) => {
 export const selectCurrentTalk: Selector<Talk | null> = (state) => {
   return state.currentTalk.talk;
 };
+
+const getImageDimensions = (
+  image: File
+): Promise<{ height: number; width: number }> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = function () {
+      const img = new Image();
+
+      img.onload = function () {
+        // Resolve with the image data
+        resolve({
+          width: img.width,
+          height: img.height,
+        });
+      };
+
+      if (reader.result) {
+        img.src = reader.result as string;
+      } else {
+        reject("image not loaded");
+      }
+    };
+
+    reader.readAsDataURL(image);
+  });
 
 export default slice.reducer;

@@ -36,10 +36,10 @@ const TalkImages: React.FunctionComponent<TalkImagesProps> = ({ talk }) => {
         {talk.images.map((image) => (
           <ListItem key={image.id}>
             <ListItemAvatar>
-              <Avatar alt={image.image} src={image.image} variant="square" />
+              <Avatar alt={image.filename} src={image.image} variant="square" />
             </ListItemAvatar>
 
-            <ListItemText primary={image.image}></ListItemText>
+            <ListItemText primary={image.filename}></ListItemText>
 
             <ListItemSecondaryAction>
               <IconButton
