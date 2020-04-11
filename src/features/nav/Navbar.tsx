@@ -6,7 +6,7 @@ import {
   Box,
   Button,
   Link as MaterialLink,
-  Avatar
+  Avatar,
 } from "@material-ui/core";
 
 import { useSelector } from "src/app/store";
@@ -32,9 +32,11 @@ const Navbar = () => {
 
         {!userLoading && (
           <>
-            <MaterialLink href={googleLogin} color="inherit">
-              <Button color="inherit">Login with Google</Button>
-            </MaterialLink>
+            {!user && (
+              <MaterialLink href={googleLogin} color="inherit">
+                <Button color="inherit">Login with Google</Button>
+              </MaterialLink>
+            )}
 
             {user && (
               <>
