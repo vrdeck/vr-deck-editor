@@ -98,6 +98,12 @@ export const slice = createSlice({
 
       state.talk.images.push(talkImage);
     },
+    deleteImageSuccess(state, action: PayloadAction<{ imageId: number }>) {
+      if (!state.talk) return;
+      state.talk.images = state.talk.images.filter(
+        (image) => image.id !== action.payload.imageId
+      );
+    },
   },
 });
 
@@ -113,6 +119,7 @@ export const {
   removeSlide,
   removeSlideLine,
   uploadImageSuccess,
+  deleteImageSuccess,
 } = slice.actions;
 
 export const loadTalk = (slug: string) => async (dispatch: Dispatch) => {
@@ -174,6 +181,23 @@ export const uploadImage = (image: File) => async (
     const talkImage = response.data.data;
 
     dispatch(uploadImageSuccess({ talkImage }));
+  } catch (e) {
+    console.error("image failed");
+  }
+};
+
+export const deleteImage = (imageId: number) => async (
+  dispatch: Dispatch,
+  getState: any
+) => {
+  const state = getState();
+  const talk = selectCurrentTalk(state);
+  if (!talk) return;
+
+  try {
+    await api.delete(`/me/talks/${talk.id}/images/${imageId}`);
+
+    dispatch(deleteImageSuccess({ imageId }));
   } catch (e) {
     console.error("image failed");
   }

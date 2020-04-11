@@ -5,7 +5,10 @@ export interface FileInputProps {
   onChange: (file: File) => void;
 }
 
-const FileInput: React.FunctionComponent<FileInputProps> = ({ onChange }) => {
+const FileInput: React.FunctionComponent<FileInputProps> = ({
+  children,
+  onChange,
+}) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return null;
     const file = event.target.files[0];
@@ -25,7 +28,7 @@ const FileInput: React.FunctionComponent<FileInputProps> = ({ onChange }) => {
         />
 
         <Button variant="contained" component="span">
-          Upload
+          {children}
         </Button>
       </label>
     </Box>

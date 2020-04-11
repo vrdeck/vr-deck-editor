@@ -67,13 +67,13 @@ const EditDeck: React.FunctionComponent<EditDeckProps> = ({ value, talk }) => {
               ))}
             </CardContent>
 
-            <CardActions>
+            <CardActions >
               <Button
                 variant="contained"
                 color="primary"
                 onClick={handleAddSlide(slideNumber)}
               >
-                Add Slide
+                Add Slide After
               </Button>
 
               <Button

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   TextField,
@@ -6,6 +6,7 @@ import {
   Typography,
   Button,
   Link as MaterialLink,
+  Drawer,
 } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -31,6 +32,8 @@ const EditTalk: React.FunctionComponent<EditTalkProps> = () => {
   const talkLoading = useSelector(selectTalkLoading);
   const talk = useSelector(selectCurrentTalk);
 
+  const [imagesOpen, setImagesOpen] = useState(false);
+
   React.useEffect(() => {
     if (slug) {
       dispatch(loadTalk(slug));
@@ -55,13 +58,26 @@ const EditTalk: React.FunctionComponent<EditTalkProps> = () => {
     <Container>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h2">Edit Talk</Typography>
-        {talk.id && (
-          <MaterialLink href={talkViewUrl(talk)} target="_blank">
-            <Button variant="contained" color="secondary">
-              View in VR
+
+        <Box display="flex">
+          <Box marginRight={2}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setImagesOpen(true)}
+            >
+              Manage Images ({talk.images.length})
             </Button>
-          </MaterialLink>
-        )}
+          </Box>
+
+          {talk.id && (
+            <MaterialLink href={talkViewUrl(talk)} target="_blank">
+              <Button variant="contained" color="secondary">
+                View in VR
+              </Button>
+            </MaterialLink>
+          )}
+        </Box>
       </Box>
 
       <Box display="flex" flexDirection="column">
@@ -77,14 +93,20 @@ const EditTalk: React.FunctionComponent<EditTalkProps> = () => {
           onChange={handleUpdate("slug")}
         ></TextField>
 
-        <TalkImages talk={talk} />
-
         <EditDeck value={talk.deck} talk={talk} />
 
         <Button variant="contained" color="primary" onClick={handleSave}>
           Save
         </Button>
       </Box>
+
+      <Drawer
+        anchor="right"
+        open={imagesOpen}
+        onClose={() => setImagesOpen(false)}
+      >
+        <TalkImages talk={talk} />
+      </Drawer>
     </Container>
   );
 };
