@@ -13,7 +13,10 @@ import {
   Switch,
 } from "@material-ui/core";
 import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
 import { useSelector, useDispatch } from "react-redux";
+
 import {
   selectCurrentTalk,
   selectTalkLoading,
@@ -31,6 +34,8 @@ export interface EditTalkProps {}
 
 const EditTalk: React.FunctionComponent<EditTalkProps> = () => {
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   const { slug } = useParams();
   const talkLoading = useSelector(selectTalkLoading);
@@ -58,8 +63,13 @@ const EditTalk: React.FunctionComponent<EditTalkProps> = () => {
     };
   }
 
-  function handleSave() {
-    dispatch(saveTalk());
+  async function handleSave() {
+    await dispatch(saveTalk());
+
+    // Update the slug url if it changed.
+    if (talk && talk.slug !== slug) {
+      history.replace(`/talks/${talk.slug}`);
+    }
   }
 
   if (talkLoading || !talk) return null;

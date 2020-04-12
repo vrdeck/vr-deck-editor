@@ -57,8 +57,8 @@ const EditSlideLine: React.FunctionComponent<EditSlideLineProps> = ({
         <CloseIcon />
       </IconButton>
 
-      <IconButton color="primary" onClick={onAdd}>
-        <AddIcon />
+      <IconButton onClick={onAdd}>
+        <AddIcon color="action" />
       </IconButton>
     </Box>
   );

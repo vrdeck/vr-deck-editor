@@ -1,13 +1,14 @@
 import React from "react";
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, ButtonProps } from "@material-ui/core";
 
-export interface FileInputProps {
+export interface FileInputProps extends Omit<ButtonProps, "onChange"> {
   onChange: (file: File) => void;
 }
 
 const FileInput: React.FunctionComponent<FileInputProps> = ({
   children,
   onChange,
+  ...props
 }) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return null;
@@ -27,7 +28,7 @@ const FileInput: React.FunctionComponent<FileInputProps> = ({
           onChange={handleFileChange}
         />
 
-        <Button variant="contained" component="span">
+        <Button variant="contained" component="span" {...props}>
           {children}
         </Button>
       </label>

@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Box,
   Container,
   Typography,
   List,
@@ -7,7 +8,8 @@ import {
   ListItemText,
   Button,
   ListItemSecondaryAction,
-  Link as MaterialLink
+  Link as MaterialLink,
+  Paper,
 } from "@material-ui/core";
 import { useSelector } from "src/app/store";
 import { selectTalks, selectTalksLoading, loadTalks } from "./talksSlice";
@@ -29,35 +31,55 @@ const MyTalks: React.FunctionComponent<MyTalksProps> = () => {
 
   return (
     <Container>
-      <Typography>Your Talks</Typography>
+      <Typography variant="h4">Your Talks</Typography>
 
-      {talks.length === 0 ? (
-        <Typography>No Talks</Typography>
-      ) : (
-        <List>
-          {talks.map(talk => (
-            <ListItem key={talk.slug}>
-              <ListItemText primary={talk.name} secondary={talk.slug} />
+      <Paper>
+        {talks.length === 0 ? (
+          <Box
+            padding={2}
+            display="flex"
+            justify-contents="center"
+            align-items="center"
+          >
+            <Typography>
+              You don't have any talks yet! Time to share your knowledge with
+              the world.
+            </Typography>
+          </Box>
+        ) : (
+          <List>
+            {talks.map((talk) => {
+              const name = `${talk.name} ${talk.private ? "(private)" : ""}`;
 
-              <ListItemSecondaryAction>
-                <Link to={`/talks/${talk.slug}`}>
-                  <Button>Edit</Button>
-                </Link>
+              return (
+                <ListItem key={talk.slug}>
+                  <ListItemText primary={name} secondary={talk.slug} />
 
-                <MaterialLink
-                  href={`${process.env.REACT_APP_VIEWER}/${talk.slug}`}
-                >
-                  <Button>View</Button>
-                </MaterialLink>
-              </ListItemSecondaryAction>
-            </ListItem>
-          ))}
-        </List>
-      )}
+                  <ListItemSecondaryAction>
+                    <Link to={`/talks/${talk.slug}`}>
+                      <Button>Edit</Button>
+                    </Link>
 
-      <Link to="/talks/new">
-        <Button>Create Talk</Button>
-      </Link>
+                    <MaterialLink
+                      href={`${process.env.REACT_APP_VIEWER}/${talk.slug}`}
+                    >
+                      <Button>View</Button>
+                    </MaterialLink>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              );
+            })}
+          </List>
+        )}
+
+        <Box padding={2}>
+          <Link to="/talks/new">
+            <Button color="primary" variant="contained">
+              Create Talk
+            </Button>
+          </Link>
+        </Box>
+      </Paper>
     </Container>
   );
 };

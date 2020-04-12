@@ -12,11 +12,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "src/app/store";
 import { talkViewUrl } from "src/lib/Talk";
 
-import {
-  loadAllTalks,
-  selectTalksLoading,
-  selectTalks,
-} from "../talks/allTalksSlice";
+import { loadAllTalks, selectTalks } from "../talks/allTalksSlice";
 
 const Home = () => {
   const dispatch = useDispatch();

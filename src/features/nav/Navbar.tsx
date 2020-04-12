@@ -26,7 +26,7 @@ const Navbar = () => {
           <Typography variant="h6">
             <Link to="/" color="inherit">
               <Box display="flex" alignItems="center">
-                <img alt="VR Deck Logo" src="logo.png" height="40px" />
+                <img alt="VR Deck Logo" src="/logo.png" height="40px" />
                 <Box marginLeft={1}>VR Deck</Box>
               </Box>
             </Link>

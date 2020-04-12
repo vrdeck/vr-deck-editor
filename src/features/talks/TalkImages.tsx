@@ -33,6 +33,13 @@ const TalkImages: React.FunctionComponent<TalkImagesProps> = ({ talk }) => {
         <ListItem>
           <Typography>Images Uploaded: {talk.images.length}</Typography>
         </ListItem>
+
+        <ListItem>
+          <FileInput color="primary" onChange={handleUploadImage}>
+            Upload New Image
+          </FileInput>
+        </ListItem>
+
         {talk.images.map((image) => (
           <ListItem key={image.id}>
             <ListItemAvatar>
@@ -52,10 +59,6 @@ const TalkImages: React.FunctionComponent<TalkImagesProps> = ({ talk }) => {
             </ListItemSecondaryAction>
           </ListItem>
         ))}
-
-        <ListItem>
-          <FileInput onChange={handleUploadImage}>Upload New Image</FileInput>
-        </ListItem>
       </List>
     </Box>
   );
