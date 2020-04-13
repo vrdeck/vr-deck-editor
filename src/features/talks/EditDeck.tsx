@@ -1,17 +1,10 @@
-import React from "react";
-import {
-  Box,
-  Card,
-  Button,
-  Typography,
-  CardContent,
-  CardActions,
-} from "@material-ui/core";
+import React, { useCallback } from "react";
+import { Box, Typography } from "@material-ui/core";
+import { useDispatch } from "react-redux";
 
 import { Deck, SlideLine } from "src/lib/Deck";
-import { ChangeEvent } from "src/lib/Event";
-import EditSlideLine from "./EditSlideLine";
-import { useDispatch } from "react-redux";
+import { Talk } from "src/lib/Talk";
+
 import {
   updateSlideLine,
   addSlide,
@@ -19,7 +12,7 @@ import {
   removeSlide,
   removeSlideLine,
 } from "./currentTalkSlice";
-import { Talk } from "src/lib/Talk";
+import EditSlide from "./EditSlide";
 
 export interface EditDeckProps {
   talk: Talk;
@@ -29,63 +22,49 @@ export interface EditDeckProps {
 const EditDeck: React.FunctionComponent<EditDeckProps> = ({ value, talk }) => {
   const dispatch = useDispatch();
 
-  const handleSlideUpdate = (slide: number, line: number) => (
-    event: ChangeEvent<SlideLine>
-  ) => {
-    const slideLine = event.target.value;
-    dispatch(updateSlideLine({ slide, line, slideLine }));
-  };
+  const handleSlideUpdate = useCallback(
+    (slide: number, line: number, slideLine: SlideLine) => {
+      dispatch(updateSlideLine({ slide, line, slideLine }));
+    },
+    [dispatch]
+  );
 
-  const handleAddSlide = (slide: number) => () => dispatch(addSlide({ slide }));
+  const handleAddSlideLine = useCallback(
+    (slide: number, line: number) => dispatch(addSlideLine({ slide, line })),
+    [dispatch]
+  );
 
-  const handleAddSlideLine = (slide: number, line: number) => () =>
-    dispatch(addSlideLine({ slide, line }));
+  const handleRemoveSlideLine = useCallback(
+    (slide: number, line: number) => dispatch(removeSlideLine({ slide, line })),
+    [dispatch]
+  );
 
-  const handleRemoveSlide = (slide: number) => () =>
-    dispatch(removeSlide({ slide }));
+  const handleAddSlide = useCallback(
+    (slide: number) => dispatch(addSlide({ slide })),
+    [dispatch]
+  );
 
-  const handleRemoveSlideLine = (slide: number, line: number) => () =>
-    dispatch(removeSlideLine({ slide, line }));
+  const handleRemoveSlide = useCallback(
+    (slide: number) => dispatch(removeSlide({ slide })),
+    [dispatch]
+  );
 
   return (
     <Box display="flex" flexDirection="column">
       <Typography variant="h3">Deck</Typography>
 
       {value.slides.map((slide, slideNumber) => (
-        <Box marginBottom={2} key={slideNumber}>
-          <Card>
-            <CardContent>
-              {slide.map((slideLine, lineNumber) => (
-                <EditSlideLine
-                  key={lineNumber}
-                  talk={talk}
-                  value={slideLine}
-                  onChange={handleSlideUpdate(slideNumber, lineNumber)}
-                  onAdd={handleAddSlideLine(slideNumber, lineNumber)}
-                  onRemove={handleRemoveSlideLine(slideNumber, lineNumber)}
-                />
-              ))}
-            </CardContent>
-
-            <CardActions >
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleAddSlide(slideNumber)}
-              >
-                Add Slide After
-              </Button>
-
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleRemoveSlide(slideNumber)}
-              >
-                Remove Slide
-              </Button>
-            </CardActions>
-          </Card>
-        </Box>
+        <EditSlide
+          key={slideNumber}
+          slide={slide}
+          images={talk.images}
+          slideNumber={slideNumber}
+          onChange={handleSlideUpdate}
+          onAddSlideLine={handleAddSlideLine}
+          onRemoveSlideLine={handleRemoveSlideLine}
+          onAddSlide={handleAddSlide}
+          onRemoveSlide={handleRemoveSlide}
+        />
       ))}
     </Box>
   );

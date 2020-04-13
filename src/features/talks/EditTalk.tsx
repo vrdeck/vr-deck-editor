@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   Container,
   TextField,
@@ -51,26 +51,34 @@ const EditTalk: React.FunctionComponent<EditTalkProps> = () => {
     }
   }, [dispatch, slug]);
 
-  function handleUpdate<T extends keyof Talk>(field: T) {
-    return (event: ChangeEvent<Talk[T]>) => {
-      dispatch(updateTalk({ [field]: event.target.value }));
-    };
-  }
+  const handleUpdate = useCallback(
+    <T extends keyof Talk>(field: T) => {
+      return (event: ChangeEvent<Talk[T]>) => {
+        dispatch(updateTalk({ [field]: event.target.value }));
+      };
+    },
+    [dispatch]
+  );
 
-  function handleCheckUpdate<T extends keyof Talk>(field: T) {
-    return (event: any, checked: boolean) => {
-      dispatch(updateTalk({ [field]: checked }));
-    };
-  }
+  const handleCheckUpdate = useCallback(
+    <T extends keyof Talk>(field: T) => {
+      return (event: any, checked: boolean) => {
+        dispatch(updateTalk({ [field]: checked }));
+      };
+    },
+    [dispatch]
+  );
 
-  async function handleSave() {
+  const talkSlug = talk?.slug;
+
+  const handleSave = useCallback(async () => {
     await dispatch(saveTalk());
 
     // Update the slug url if it changed.
-    if (talk && talk.slug !== slug) {
-      history.replace(`/talks/${talk.slug}`);
+    if (talkSlug && talkSlug !== slug) {
+      history.replace(`/talks/${talkSlug}`);
     }
-  }
+  }, [dispatch, history, slug, talkSlug]);
 
   if (talkLoading || !talk) return null;
 

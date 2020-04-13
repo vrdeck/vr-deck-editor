@@ -64,4 +64,4 @@ const TalkImages: React.FunctionComponent<TalkImagesProps> = ({ talk }) => {
   );
 };
 
-export default TalkImages;
+export default React.memo(TalkImages);

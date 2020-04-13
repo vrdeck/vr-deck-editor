@@ -15,7 +15,7 @@ const initialState: TalksSlice = {
 };
 
 export const slice = createSlice({
-  name: "user",
+  name: "talks",
   initialState,
   reducers: {
     talksLoadStart: (state) => {

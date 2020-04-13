@@ -5,26 +5,33 @@ import CloseIcon from "@material-ui/icons/Close";
 
 import { SlideLine } from "src/lib/Deck";
 import { OnChange, useFormUpdate } from "src/lib/Event";
-import { Talk } from "src/lib/Talk";
+import { TalkImage } from "src/lib/Talk";
 
 import ImageSelector from "./ImageSelector";
 
 export interface EditSlideLineProps {
   value: SlideLine;
-  talk: Talk;
-  onChange: OnChange<SlideLine>;
-  onAdd: () => void;
-  onRemove: () => void;
+  images: TalkImage[];
+  slideNumber: number;
+  lineNumber: number;
+  onChange: (slide: number, line: number, slideLine: SlideLine) => void;
+  onAdd: (slide: number, line: number) => void;
+  onRemove: (slide: number, line: number) => void;
 }
 
 const EditSlideLine: React.FunctionComponent<EditSlideLineProps> = ({
   value,
+  images,
+  slideNumber,
+  lineNumber,
   onChange,
   onAdd,
   onRemove,
-  talk,
 }) => {
-  const handleUpdate = useFormUpdate(value, onChange);
+  const handleChange: OnChange<SlideLine> = (event) =>
+    onChange(slideNumber, lineNumber, event.target.value);
+
+  const handleUpdate = useFormUpdate(value, handleChange);
 
   const { kind, image, content } = value;
 
@@ -40,7 +47,7 @@ const EditSlideLine: React.FunctionComponent<EditSlideLineProps> = ({
         {kind === "img" ? (
           <ImageSelector
             value={image}
-            images={talk.images}
+            images={images}
             onChange={handleUpdate("image")}
           />
         ) : (
@@ -53,15 +60,18 @@ const EditSlideLine: React.FunctionComponent<EditSlideLineProps> = ({
         )}
       </Box>
 
-      <IconButton color="secondary" onClick={onRemove}>
+      <IconButton
+        color="secondary"
+        onClick={() => onRemove(slideNumber, lineNumber)}
+      >
         <CloseIcon />
       </IconButton>
 
-      <IconButton onClick={onAdd}>
+      <IconButton onClick={() => onAdd(slideNumber, lineNumber)}>
         <AddIcon color="action" />
       </IconButton>
     </Box>
   );
 };
 
-export default EditSlideLine;
+export default React.memo(EditSlideLine);
