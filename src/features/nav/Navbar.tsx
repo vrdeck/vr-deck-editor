@@ -5,15 +5,14 @@ import {
   Typography,
   Box,
   Button,
-  Link as MaterialLink,
   Avatar,
 } from "@material-ui/core";
 
 import { useSelector } from "src/app/store";
 import { selectUser, selectUserLoading } from "src/features/user/userSlice";
-import Link from "./Link";
 
-const googleLogin = `${process.env.REACT_APP_AUTH_PATH}/auth/google`;
+import Link from "./Link";
+import LoginButton from "./LoginButton";
 
 const Navbar = () => {
   const user = useSelector(selectUser);
@@ -36,9 +35,7 @@ const Navbar = () => {
         {!userLoading && (
           <>
             {!user && (
-              <MaterialLink href={googleLogin} color="inherit">
-                <Button color="inherit">Login with Google</Button>
-              </MaterialLink>
+              <LoginButton color="inherit">Login with Google</LoginButton>
             )}
 
             {user && (

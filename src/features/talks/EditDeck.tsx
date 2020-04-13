@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography, Button } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 
 import { Deck, SlideLine } from "src/lib/Deck";
@@ -66,6 +66,16 @@ const EditDeck: React.FunctionComponent<EditDeckProps> = ({ value, talk }) => {
           onRemoveSlide={handleRemoveSlide}
         />
       ))}
+
+      <Box marginBottom={2}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => handleAddSlide(value.slides.length)}
+        >
+          Add Slide
+        </Button>
+      </Box>
     </Box>
   );
 };

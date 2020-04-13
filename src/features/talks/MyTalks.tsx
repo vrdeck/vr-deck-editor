@@ -31,7 +31,11 @@ const MyTalks: React.FunctionComponent<MyTalksProps> = () => {
 
   return (
     <Container>
-      <Typography variant="h4">Your Talks</Typography>
+      <Box paddingTop={2}>
+        <Typography variant="h4" gutterBottom>
+          Your Talks
+        </Typography>
+      </Box>
 
       <Paper>
         {talks.length === 0 ? (

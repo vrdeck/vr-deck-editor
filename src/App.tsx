@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import Navbar from "./features/nav/Navbar";
-import Home from "./features/static/Home";
+import Home from "./features/home/Home";
 import PrivacyPolicy from "./features/static/PrivacyPolicy";
 import Terms from "./features/static/Terms";
 import UserProfile from "./features/user/UserProfile";
