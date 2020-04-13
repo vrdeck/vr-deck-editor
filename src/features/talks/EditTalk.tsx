@@ -43,6 +43,8 @@ const EditTalk: React.FunctionComponent<EditTalkProps> = () => {
 
   const [imagesOpen, setImagesOpen] = useState(false);
 
+  const talkSlug = talk?.slug;
+
   React.useEffect(() => {
     if (slug) {
       dispatch(loadTalk(slug));
@@ -68,8 +70,6 @@ const EditTalk: React.FunctionComponent<EditTalkProps> = () => {
     },
     [dispatch]
   );
-
-  const talkSlug = talk?.slug;
 
   const handleSave = useCallback(async () => {
     await dispatch(saveTalk());
@@ -138,7 +138,12 @@ const EditTalk: React.FunctionComponent<EditTalkProps> = () => {
 
         <EditDeck value={talk.deck} talk={talk} />
 
-        <Button variant="contained" color="primary" onClick={handleSave}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSave}
+          disabled={!talkSlug}
+        >
           Save
         </Button>
       </Box>

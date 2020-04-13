@@ -21,6 +21,7 @@ const HomeTalks: React.FunctionComponent<TalksProps> = () => {
   if (talks.length === 0) return null;
 
   const welcomeTalk = talks.find(({ slug }) => slug === "welcome") as Talk;
+  const recordingTalk = talks.find(({ slug }) => slug === "101") as Talk;
   const danceTalk = talks.find(({ slug }) => slug === "dance") as Talk;
 
   console.log(welcomeTalk, talks);
@@ -42,7 +43,7 @@ const HomeTalks: React.FunctionComponent<TalksProps> = () => {
             color="inherit"
           >
             <Typography variant="h5" gutterBottom>
-              Welcome!
+              {welcomeTalk.name}
             </Typography>
 
             <Typography>An introduction to VR Deck.</Typography>
@@ -51,13 +52,13 @@ const HomeTalks: React.FunctionComponent<TalksProps> = () => {
 
         <Grid item xs={12} sm={4}>
           <MaterialLink
-            key={welcomeTalk.slug}
-            href={talkViewUrl(welcomeTalk)}
+            key={recordingTalk.slug}
+            href={talkViewUrl(recordingTalk)}
             target="_blank"
             color="inherit"
           >
             <Typography variant="h5" gutterBottom>
-              Recording 101
+              {recordingTalk.name}
             </Typography>
 
             <Typography>Learn more about creating talks in VR Deck.</Typography>

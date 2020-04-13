@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, TextField, IconButton } from "@material-ui/core";
+import {
+  Box,
+  TextField,
+  IconButton,
+  FormControl,
+  Select,
+  InputLabel,
+  MenuItem,
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -19,6 +27,13 @@ export interface EditSlideLineProps {
   onRemove: (slide: number, line: number) => void;
 }
 
+const LINE_OPTIONS = [
+  { value: "p", label: "Text" },
+  { value: "h1", label: "Large Heading" },
+  { value: "h2", label: "Medium Heading" },
+  { value: "img", label: "Image" },
+];
+
 const EditSlideLine: React.FunctionComponent<EditSlideLineProps> = ({
   value,
   images,
@@ -36,12 +51,22 @@ const EditSlideLine: React.FunctionComponent<EditSlideLineProps> = ({
   const { kind, image, content } = value;
 
   return (
-    <Box display="flex" flexDirection="row">
-      <TextField
-        label="Format"
-        value={kind}
-        onChange={handleUpdate("kind")}
-      ></TextField>
+    <Box display="flex" flexDirection="row" marginBottom={2}>
+      <FormControl>
+        <InputLabel>Format</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={kind}
+          onChange={handleUpdate("kind") as any}
+        >
+          {LINE_OPTIONS.map(({ value, label }) => (
+            <MenuItem key={value} value={value}>
+              {label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
       <Box flexGrow={1}>
         {kind === "img" ? (

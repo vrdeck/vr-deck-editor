@@ -27,6 +27,14 @@ const TalkImages: React.FunctionComponent<TalkImagesProps> = ({ talk }) => {
   const handleUploadImage = (image: File) => dispatch(uploadImage(image));
   const handleDeleteImage = (imageId: number) => dispatch(deleteImage(imageId));
 
+  if (!talk.id) {
+    return (
+      <Box padding={2}>
+        <Typography>Please save your talk before uploading images.</Typography>
+      </Box>
+    );
+  }
+
   return (
     <Box>
       <List>
