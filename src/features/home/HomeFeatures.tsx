@@ -47,9 +47,9 @@ const HomeFeatures: React.FunctionComponent<HomeFeaturesProps> = () => {
               </Typography>
 
               <Typography>
-                Chrome and the Oculus Browser have full support, with Firefox
-                support. You can record in any headset with a mic and hand
-                tracking, like the Oculus Rift or Quest.
+                Firefox and the Oculus Browser have full support, and Chrome
+                works with flags. You can record in any headset with a mic and
+                hand tracking, like the Oculus Rift or Quest.
               </Typography>
             </>
           }
