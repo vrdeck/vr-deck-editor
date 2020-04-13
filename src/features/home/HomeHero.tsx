@@ -25,6 +25,7 @@ const HomeHero: React.FunctionComponent<HomeHeroProps> = () => {
         <video
           autoPlay
           loop
+          muted
           width="100%"
           height="100%"
           style={{
