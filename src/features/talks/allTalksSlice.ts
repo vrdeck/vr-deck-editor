@@ -54,6 +54,11 @@ export const selectTalks: Selector<Talk[]> = (state) => {
   return state.allTalks.talks;
 };
 
+export const selectTalk = (talkSlug: string): Selector<Talk> => (state) => {
+  const talks = selectTalks(state);
+  return talks.find(({ slug }) => slug === talkSlug) as Talk;
+};
+
 export const selectTalksLoading: Selector<boolean> = (state) => {
   return state.allTalks.talksLoading;
 };

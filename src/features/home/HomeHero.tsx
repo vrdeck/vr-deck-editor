@@ -1,16 +1,24 @@
 import React from "react";
-import { Box, Container, Typography, Button } from "@material-ui/core";
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Link as MaterialLink,
+} from "@material-ui/core";
 
 import { useSelector } from "src/app/store";
 import Link from "src/features/nav/Link";
-import LoginButton from "src/features/nav/LoginButton";
 import { selectUserLoading, selectUser } from "src/features/user/userSlice";
+import { talkViewUrl } from "src/lib/Talk";
+import { selectTalk } from "../talks/allTalksSlice";
 
 export interface HomeHeroProps {}
 
 const HomeHero: React.FunctionComponent<HomeHeroProps> = () => {
   const userLoading = useSelector(selectUserLoading);
   const user = useSelector(selectUser);
+  const welcomeTalk = useSelector(selectTalk("welcome"));
 
   return (
     <Box position="relative" minHeight="450px" marginBottom={4} paddingTop={2}>
@@ -53,9 +61,13 @@ const HomeHero: React.FunctionComponent<HomeHeroProps> = () => {
                 </Button>
               </Link>
             ) : (
-              <LoginButton variant="contained" color="primary">
-                Create an Account
-              </LoginButton>
+              welcomeTalk && (
+                <MaterialLink href={talkViewUrl(welcomeTalk)}>
+                  <Button variant="contained" color="primary">
+                    Learn More
+                  </Button>
+                </MaterialLink>
+              )
             ))}
         </Box>
       </Container>

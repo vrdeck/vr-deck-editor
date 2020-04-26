@@ -12,6 +12,7 @@ import { loadUser } from "./features/user/userSlice";
 import WithUser from "./features/user/withUser";
 import PrivateRoute from "./features/user/PrivateRoute";
 import EditTalk from "./features/talks/EditTalk";
+import Footer from "./features/nav/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,6 +55,8 @@ function App() {
             <Home />
           </Route>
         </Switch>
+
+        <Footer />
       </WithUser>
     </Router>
   );

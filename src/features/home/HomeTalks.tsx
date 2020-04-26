@@ -24,8 +24,6 @@ const HomeTalks: React.FunctionComponent<TalksProps> = () => {
   const recordingTalk = talks.find(({ slug }) => slug === "101") as Talk;
   const danceTalk = talks.find(({ slug }) => slug === "dance") as Talk;
 
-  console.log(welcomeTalk, talks);
-
   return (
     <>
       <Box marginBottom={3}>
